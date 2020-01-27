@@ -3,29 +3,33 @@ set (CMAKE_CXX_STANDARD 17)
 
 project(fieldgen)
 
-list(APPEND CMAKE_MODULE_PATH "./cmake")
+list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
 find_package(SuiteSparse REQUIRED)
 
 add_executable(fieldgen
-        src/Complex.cpp
-        src/DenseMatrix.cpp
-        src/Edge.cpp
-        src/Face.cpp
-        src/HalfEdge.cpp
-        src/KVecDir.cpp
-        src/LinearContext.cpp
-        src/Mesh.cpp
-        src/MeshIO.cpp
-        src/Quaternion.cpp
-        src/Real.cpp
-        src/SectionIntegrals.cpp
-        src/SparseMatrix.cpp
-        src/Vector.cpp
-        src/Vertex.cpp
-        src/commandline.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/Complex.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/DenseMatrix.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/Edge.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/Face.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/HalfEdge.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/KVecDir.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/LinearContext.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/Mesh.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/MeshIO.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/Quaternion.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/Real.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/SectionIntegrals.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/SparseMatrix.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/Vector.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/Vertex.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/commandline.cpp
         )
 
-target_include_directories(fieldgen PUBLIC ./src ./include ${SUITESPARSE_INCLUDE_DIRS})
+target_include_directories(fieldgen PUBLIC 
+	${CMAKE_CURRENT_SOURCE_DIR}/src 
+	${CMAKE_CURRENT_SOURCE_DIR}/include 
+	${SUITESPARSE_INCLUDE_DIRS})
 
 target_link_libraries(fieldgen ${SUITESPARSE_LIBRARIES})
+
