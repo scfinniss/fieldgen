@@ -195,33 +195,7 @@ namespace DDG
       cout << "[qr] rank: " << (*context).SPQR_istat[4]/4 << "\n";
    }
 
-   template <>
-   void solveSquare( SparseMatrix<Complex>& A,
-                        DenseMatrix<Complex>& x,
-                        DenseMatrix<Complex>& b )
-   // solves the sparse linear system Ax = b using sparse LU factorization
-   {
-      int t0 = clock();
-      cholmod_sparse* Ac = A.to_cholmod();
-      int n = Ac->nrow;
-      SuiteSparse_long* Ap = (SuiteSparse_long*) Ac->p;
-      SuiteSparse_long* Ai = (SuiteSparse_long*) Ac->i;
-      double*  Ax =  (double*) Ac->x;
-      void* Symbolic;
-      void* Numeric;
-
-      umfpack_zl_symbolic( n, n, Ap, Ai, Ax, NULL, &Symbolic, NULL, NULL );
-      umfpack_zl_numeric( Ap, Ai, Ax, NULL, Symbolic, &Numeric, NULL, NULL );
-      umfpack_zl_solve( UMFPACK_A, Ap, Ai, Ax, NULL, (double*) &x(0), NULL, (double*) &b(0), NULL, Numeric, NULL, NULL );
-      umfpack_zl_free_symbolic( &Symbolic );
-      umfpack_zl_free_numeric( &Numeric );
-
-      int t1 = clock();
-      cout << "[lu] time: " << seconds( t0, t1 ) << "s" << "\n";
-      cout << "[lu] max residual: " << residual( A, x, b ) << "\n";
-   }
-
-   template<>
+    template<>
    DenseMatrix<Complex> SparseMatrix<Complex> :: multiply( DenseMatrix<Complex>& x, bool transpose )
    // returns product of this matrix with dense B; if
    // transpose is true, uses transport of this matrix
